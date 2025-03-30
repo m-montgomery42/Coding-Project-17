@@ -53,3 +53,51 @@ class VIPCustomer extends Customer {
       console.log(`VIP Customer’s total spent with bonus: ${this.name}, $${this.getTotalSpent().toFixed(2)}`); // Log correct total spent
     }
   }
+
+// Task 4: Build a Client Report System
+
+// Create sales representative
+const salesRep = new SalesRep("Marcus Wild");
+
+// Create customers
+const customer1 = new Customer("Alexis Trebek", "AlexTreb1@example.com");
+const customer2 = new Customer("Philip Reeves", "PReeves92@example.com");
+const vipCustomer = new VIPCustomer("Regina Cahill", "CahillRegina@example.com", "Gold");
+
+// Add purchases
+customer1.addPurchase(120);
+customer1.addPurchase(150);
+customer2.addPurchase(675);
+vipCustomer.addPurchase(480);
+vipCustomer.addPurchase(750);
+
+// Log total spent per customer **AFTER** purchases are made
+customer1.logTotalSpent();
+customer2.logTotalSpent();
+vipCustomer.logTotalSpent();
+
+// Add clients to sales rep
+salesRep.addClient(customer1);
+salesRep.addClient(customer2);
+salesRep.addClient(vipCustomer);
+
+// Log each client's total spent
+salesRep.getClientTotal(customer1.name);
+salesRep.getClientTotal(customer2.name);
+salesRep.getClientTotal(vipCustomer.name);
+
+// Calculate and log total revenue
+const totalRevenue = salesRep.clients.reduce((total, client) => total + client.getTotalSpent(), 0);
+console.log(`Total revenue from all customers: $${totalRevenue.toFixed(2)}`);
+
+// Find and log high spenders
+const highSpenders = salesRep.clients.filter(client => client.getTotalSpent() > 500);
+highSpenders.forEach(client => {
+  console.log(`High Spending Customer: ${client.name}, Total spent: $${client.getTotalSpent().toFixed(2)}`);
+});
+
+// Log customer summary
+console.log("Customer Summary:");
+salesRep.clients.forEach(client => {
+  console.log(`${client.name}, Total spent: $${client.getTotalSpent().toFixed(2)}`);
+});
